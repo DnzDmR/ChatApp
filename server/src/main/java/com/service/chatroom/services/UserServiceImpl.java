@@ -2,12 +2,37 @@ package com.service.chatroom.services;
 
 import com.service.chatroom.entity.Group;
 import com.service.chatroom.entity.User;
+import com.service.chatroom.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserDetailsService,UserService{
+
+    @Autowired
+    private UserRepository repository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Optional<User> user = repository.findByUsername(username);
+
+        if(user.isPresent()){
+            throw new UsernameNotFoundException("User not found");
+        }else{
+            List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
+            return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
+        }
+
+    }
 
     @Override
     public boolean createUser(User user) {
@@ -48,4 +73,6 @@ public class UserServiceImpl implements UserService{
     public boolean isOnlineByUsername(String username) {
         return false;
     }
+
+
 }
