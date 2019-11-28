@@ -1,7 +1,9 @@
 package com.service.chatroom.services;
 
 import com.service.chatroom.entity.Message;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MessageServiceImpl implements MessageService{
 
     @Override

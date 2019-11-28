@@ -1,7 +1,9 @@
 package com.service.chatroom.services;
 
 import com.service.chatroom.entity.Group;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GroupServiceImpl implements GroupService {
     @Override
     public boolean createGroup(Group group) {
