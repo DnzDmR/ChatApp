@@ -36,22 +36,40 @@ public class UserServiceImpl implements UserDetailsService,UserService{
 
     @Override
     public boolean createUser(User user) {
-        return false;
+
+        try{
+            repository.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+
+        try{
+            repository.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Override
     public boolean deleteUserByUsername(String username) {
-        return false;
+        try{
+            repository.deleteUserByUsername(username);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return null;
+    public Optional<User> getUserByUsername(String username) {
+
+        return repository.findByUsername(username);
     }
 
     @Override
