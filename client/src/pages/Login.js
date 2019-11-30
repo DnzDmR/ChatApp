@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core/styles';
 import VpnKey from '@material-ui/icons/VpnKey';
 import FindReplace from '@material-ui/icons/FindReplace';
+import UserController from '../controller/LoginController';
 
 const useStyle= theme =>
     ({
@@ -38,7 +39,7 @@ class Login extends React.Component
                 <form className={classes.form}>
                     <TextField variant="outlined" label="username" fullWidth autoFocus className={classes.space}  onChange={event => {this.setState({username:event.target.value})}} />
                     <TextField variant="outlined" label="password" fullWidth type="password" className={classes.space} onChange={event => {this.setState({password:event.target.value})}}/>
-                    <Button type="submit" variant="contained" color="primary" fullWidth className={classes.space} onClick={this.login.bind(this)}>Login</Button>
+                    <Button variant="contained" color="primary" fullWidth className={classes.space} onClick={this.login.bind(this)}>Login</Button>
                     <Box className={classes.space}>
                         <VpnKey style={{ fontSize: 20 }} />
                         <Link> Register Me !</Link>
@@ -53,8 +54,10 @@ class Login extends React.Component
 
     }
 
-    login(){
-        
+    login(event){
+
+        UserController.userLogin(this.state.username,this.state.password);
+        event.preventDefault();
     }
  
 }
