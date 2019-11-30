@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collation = "users")
-public class User {
+@Document(collection = "users")
+public class Users {
 
     @Id
     private ObjectId _id;

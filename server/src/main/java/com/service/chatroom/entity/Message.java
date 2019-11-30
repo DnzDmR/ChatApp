@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Document(collation = "messages")
+@Document(collection = "messages")
 public class Message {
 
     @Id

@@ -1,10 +1,11 @@
 package com.service.chatroom.services;
 
 import com.service.chatroom.entity.Group;
-import com.service.chatroom.entity.User;
+import com.service.chatroom.entity.Users;
 import com.service.chatroom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,19 +24,19 @@ public class UserServiceImpl implements UserDetailsService,UserService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<User> user = repository.findByUsername(username);
+        Optional<Users> user = repository.findByUsername(username);
 
-        if(user.isPresent()){
+        if(!user.isPresent()){
             throw new UsernameNotFoundException("User not found");
         }else{
             List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
-            return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
+            return new User(user.get().getUsername(), user.get().getPassword(), authorities);
         }
 
     }
 
     @Override
-    public boolean createUser(User user) {
+    public boolean createUser(Users user) {
 
         try{
             repository.save(user);
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserDetailsService,UserService{
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public boolean updateUser(Users user) {
 
         try{
             repository.save(user);
@@ -67,18 +68,18 @@ public class UserServiceImpl implements UserDetailsService,UserService{
     }
 
     @Override
-    public Optional<User> getUserByUsername(String username) {
+    public Optional<Users> getUserByUsername(String username) {
 
         return repository.findByUsername(username);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return null;
     }
 
     @Override
-    public List<User> getOnlineUsers() {
+    public List<Users> getOnlineUsers() {
         return null;
     }
 

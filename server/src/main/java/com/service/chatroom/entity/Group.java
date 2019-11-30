@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collation = "groups")
+@Document(collection = "groups")
 public class Group {
 
     @Id
@@ -14,7 +14,7 @@ public class Group {
 
     private String groupName;
 
-    private List<User> userList;
+    private List<Users> userList;
 
     public ObjectId get_id() {
         return _id;
@@ -32,11 +32,11 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public List<User> getUserList() {
+    public List<Users> getUserList() {
         return userList;
     }
 
-    public void setUserList(List<User> userList) {
+    public void setUserList(List<Users> userList) {
         this.userList = userList;
     }
 }
