@@ -7,7 +7,10 @@ export default class UserController {
 
         await fetch(url,{
             method: "GET",
-        }).then(response => response).then(response => console.log(response.headers.get('Authorization')));
+        }).then(response => response.json()).then(data =>{
+            console.log(data);
+            sessionStorage.setItem("token",data.token);
+        }).catch(err => console.log(err));
         
         
     }
