@@ -1,5 +1,6 @@
+import decode from 'jwt-decode';
 
-export default class UserController {
+export default class LoginController {
 
     static async userLogin(username,password){
         
@@ -13,6 +14,20 @@ export default class UserController {
         }).catch(err => console.log(err));
         
         
+    }
+
+    //check token
+    static isExpired(){
+        var isExpired = false;
+        const token = sessionStorage.getItem('token');
+        if(token != null){
+            var decodedToken=decode(token, {complete: true});
+            var dateNow = new Date();
+
+            if(decodedToken.exp < dateNow.getTime())
+                isExpired = true;
+        }
+        return isExpired;
     }
 
 
