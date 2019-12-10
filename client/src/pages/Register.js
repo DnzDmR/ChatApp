@@ -7,9 +7,7 @@ import Box from '@material-ui/core/Box';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { withStyles } from '@material-ui/core/styles';
-import VpnKey from '@material-ui/icons/VpnKey';
-import FindReplace from '@material-ui/icons/FindReplace';
-import LoginController from '../controller/LoginController';
+import UserController from '../controller/UserController';
 
 const useStyle= theme =>
     ({
@@ -24,14 +22,16 @@ const useStyle= theme =>
         },        
     });
 
-class Login extends React.Component
+class Register extends React.Component
 {
     constructor(props){
         super(props);
         this.state={
             username:"",
             password:"",
-            error:false,
+            firstName:"",
+            lastName:"",
+            email:"",
         }
     }
     
@@ -43,15 +43,13 @@ class Login extends React.Component
             <Container maxWidth="xs" component="main">
                 <form className={classes.form}>
                     <TextField variant="outlined" label="username" fullWidth autoFocus className={classes.space}  onChange={event => {this.setState({username:event.target.value})}} />
-                    <TextField variant="outlined" label="password" fullWidth type="password" className={classes.space} onChange={event => {this.setState({password:event.target.value})}}/>
-                    <Button variant="contained" color="primary" fullWidth className={classes.space} onClick={this.login.bind(this)}>Login</Button>
+                    <TextField variant="outlined" label="password" fullWidth className={classes.space} onChange={event => {this.setState({password:event.target.value})}}/>
+                    <TextField variant="outlined" label="first name" fullWidth className={classes.space} onChange={event => {this.setState({firstName:event.target.value})}}/>
+                    <TextField variant="outlined" label="last name" fullWidth className={classes.space} onChange={event => {this.setState({lastName:event.target.value})}}/>
+                    <TextField variant="outlined" label="email" fullWidth className={classes.space} onChange={event => {this.setState({email:event.target.value})}}/>
+                    <Button variant="contained" color="primary" fullWidth className={classes.space} onClick={this.register.bind(this)}>Register</Button>
                     <Box className={classes.space}>
-                        <VpnKey style={{ fontSize: 20 }} />
-                        <Link href="/register"> Register Me !</Link>
-                    </Box>
-                    <Box className={classes.space}>
-                        <FindReplace style={{ fontSize: 20 }} />
-                        <Link> Forgot My Account</Link>
+                        <Link href="/login">Login</Link>
                     </Box>
                     <Snackbar open={this.state.error}>
                         <SnackbarContent className={classes.error} message="User not found !" />                        
@@ -60,21 +58,19 @@ class Login extends React.Component
             </Container>
         );
 
-    }
+    } 
 
-    async login(event){
-
+    register(event){
         event.preventDefault();
-        const status = await LoginController.userLogin(this.state.username,this.state.password);
-
-        if(status){
-            {window.location.href="home"}
-        }else{
-            this.setState({error:true});
+        const user = {
+            username:this.state.username,
+            password:this.state.password,
+            firstName:this.state.firstName,
+            lastName:this.state.lastName,
+            email:this.state.email,
         }
-        
+        UserController.userRegister(user);
     }
- 
 }
 
-export default withStyles(useStyle)(Login)
+export default withStyles(useStyle)(Register)

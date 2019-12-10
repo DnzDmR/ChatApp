@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Register from './pages/Register';
 import LoginController from './controller/LoginController';
 import * as serviceWorker from './serviceWorker';
 import {Switch, Redirect, Route,BrowserRouter as Router } from 'react-router-dom';
@@ -13,11 +14,12 @@ const routing = (
             <Route exact path="/login">
                 <Login />
             </Route>
+            <Route exact path="/register">
+                <Register />
+            </Route>
             <Route exact path="/home">
                 { LoginController.isExpired() ? <Home /> : <Redirect to="/login" />} 
             </Route>
-            <Route path="/profile">
-                </Route>
             <Route path="*">
                 { LoginController.isExpired() ? <Redirect to="/home" /> : <Redirect to="/login" />}
             </Route>
