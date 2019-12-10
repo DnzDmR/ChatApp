@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { withStyles } from '@material-ui/core/styles';
 import VpnKey from '@material-ui/icons/VpnKey';
 import FindReplace from '@material-ui/icons/FindReplace';
@@ -13,13 +15,15 @@ const useStyle= theme =>
     ({
         form:{
             marginTop:theme.spacing(8),
-            
         },
         space:{
             marginTop:theme.spacing(2),
-        }        
+        },
+        error: {
+            backgroundColor: theme.palette.error.dark,
+        },        
     });
- 
+
 class Login extends React.Component
 {
     constructor(props){
@@ -27,11 +31,12 @@ class Login extends React.Component
         this.state={
             username:"",
             password:"",
+            error:false,
         }
     }
     
     render() {
-
+     
         const { classes } = this.props;
         
         return (
@@ -48,16 +53,25 @@ class Login extends React.Component
                         <FindReplace style={{ fontSize: 20 }} />
                         <Link> Forgot My Account</Link>
                     </Box>
+                    <Snackbar open={this.state.error}>
+                        <SnackbarContent className={classes.error} message="User not found !" />                        
+                    </Snackbar>
                 </form>
             </Container>
         );
 
     }
 
-    login(event){
+    async login(event){
 
-        UserController.userLogin(this.state.username,this.state.password);
-        event.preventDefault();
+        const status = await UserController.userLogin(this.state.username,this.state.password);
+        
+        if(status){
+            {window.location.href="home"}
+        }else{
+            this.setState({error:true});
+        }
+        
     }
  
 }

@@ -6,12 +6,12 @@ export default class LoginController {
         
         const url = `http://localhost:9090/api/authenticate?username=${username}&password=${password}`;
 
-        await fetch(url,{
+        return await fetch(url,{
             method: "GET",
         }).then(response => response.json()).then(data =>{
-            console.log(data);
-            sessionStorage.setItem("token",data.token);
-        }).catch(err => console.log(err));
+            localStorage.setItem("token",data.token);
+            return data.status;
+        }).catch(err => {console.log(err); return false;});
         
         
     }
@@ -19,11 +19,10 @@ export default class LoginController {
     //check token
     static isExpired(){
         var isExpired = false;
-        const token = sessionStorage.getItem('token');
-        if(token != null){
+        const token = localStorage.getItem('token');
+        if(token != "" && token != null ){
             var decodedToken=decode(token, {complete: true});
             var dateNow = new Date();
-
             if(decodedToken.exp < dateNow.getTime())
                 isExpired = true;
         }
