@@ -20,13 +20,19 @@ export default class LoginController {
     static isExpired(){
         var isExpired = false;
         const token = localStorage.getItem('token');
-        if(token != "" && token != null ){
+        if(token !== "" && token !== null ){
             var decodedToken=decode(token, {complete: true});
             var dateNow = new Date();
             if(decodedToken.exp < dateNow.getTime())
                 isExpired = true;
         }
         return isExpired;
+    }
+
+    //logout 
+    static logout(){
+        localStorage.removeItem("token");
+        window.location.href="login";
     }
 
 

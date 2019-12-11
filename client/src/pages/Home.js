@@ -1,26 +1,12 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
- 
-class Home extends React.Component
+import Navbar from '../component/Navbar';
+
+export default function Home()
 {
-    constructor(props){
-        super(props);
-        this.state={
-           
-        }
-    }
-    
-    render() {
 
-        return (
-            <Container maxWidth="xs" component="main">
-                <div></div>
-            </Container>
-        );
-
-    }
-
- 
+    return (
+        <div>
+            <Navbar />
+        </div>
+    );
 }
-
-export default Home;

@@ -68,7 +68,7 @@ class Login extends React.Component
         const status = await LoginController.userLogin(this.state.username,this.state.password);
 
         if(status){
-            {window.location.href="home"}
+            window.location.href="home";
         }else{
             this.setState({error:true});
         }
