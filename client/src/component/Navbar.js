@@ -105,7 +105,7 @@ export default function Home()
                     </Toolbar>
                 </AppBar>
                 <Dialog open={open}
-                    style={{zIndex:-1000}} 
+                    style={{zIndex:10000}} 
                     TransitionComponent={Transition} 
                     keepMounted
                     onClose={dialogHandleClose}
