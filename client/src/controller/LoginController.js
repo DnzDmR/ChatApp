@@ -10,6 +10,7 @@ export default class LoginController {
             method: "GET",
         }).then(response => response.json()).then(data =>{
             localStorage.setItem("token",data.token);
+            localStorage.setItem("username",username);
             return data.status;
         }).catch(err => {console.log(err); return false;});
         
